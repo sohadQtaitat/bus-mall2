@@ -1,0 +1,58 @@
+
+body {
+
+ 
+    font-family: Georgia;
+}
+
+header {
+
+    text-align: center;
+    border: 3px dashed rgb(151, 4, 4); 
+       border-radius: 5px;
+    background-color: rgb(97, 93, 97);
+    color: rgb(128, 0, 6);
+}
+
+
+
+
+
+#products-container {
+
+  color: rgb(128, 6, 6);
+  background-color: rgb(99, 94, 102);
+}
+
+
+
+
+section div {
+    width: 30%;
+    float: left;
+    padding: 5px;
+    border: 9px solid rgb(116, 3, 3);
+    height: 350px;
+    text-align: center; 
+    margin-left: 10px; 
+    margin-bottom: 10px;
+}
+
+
+
+  div img {
+    width: 50%;
+  }
+
+
+  #productsTable {
+
+    text-align: center;
+    font-size: 20px;
+  }
+
+
+  ul {
+      color: darkred;
+      text-align: center;
+  }
