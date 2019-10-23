@@ -56,6 +56,40 @@ new products('pen', 'img/pen.jpg');
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function renderNewProducts() {
 
   var forbidden = [products.leftObject, products.centerObject, products.rightObject];
@@ -118,7 +152,7 @@ function getRandomProduct() {
 
 function updateTotals() {
 
-  var alloutput = document.getElementById('productsTable');
+  var alloutput = document.getElementById('productList');
 
   alloutput.innerHTML = '';
 
@@ -271,3 +305,55 @@ function fullChart()
   });
 
 }
+
+
+
+
+
+
+
+var localStorgee = document.getElementById('productList');
+  
+  
+function updateProducts() {
+  var productString = JSON.stringify(products.all);
+  localStorage.setItem('Products', productString);
+}
+
+
+
+
+
+function getProducts() {
+  var productData = localStorage.getItem('Products');
+
+
+  var ProductData = JSON.parse(productData);
+
+
+
+
+  if (ProductData) {
+      for (let i = 0; i < ProductData.length; i++) {
+      var createProductObject = ProductData[i];
+      var chgProductCtrs = products.all[i];
+      
+      chgProductCtrs.seenCounter = createProductObject.seenCounter;
+      chgProductCtrs.clickCtr = createProductObject.clickCtr;
+    }
+
+
+    renderNewProducts();
+  }else {
+    
+    alert('emptyyyyyy');
+
+  }
+
+}
+renderNewProducts();
+getProducts();
+updateTotals();
+
+
+
