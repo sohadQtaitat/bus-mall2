@@ -1,207 +1,273 @@
 'use strict';
 
 
-
-
-function Products(name, src) {
-    this.name = name;
-    this.src = src;
-    this.clickCtr = 0;
-    this.shownCtr = 0;
-    Products.all.push(this);
+function products(name, src) {
+  this.name = name;
+  this.src = src;
+  this.clickCtr = 0;
+  this.seenCounter = 0;
+  products.all.push(this);
 }
 
-Products.firstCtr = 0;
-Products.maxLimit = 25;
-Products.all = [];
+products.initialCounter = 0;
+products.maxLimit = 25;
+products.all = [];
+
+
+products.container = document.getElementById('productForm');
+
+products.leftImage = document.getElementById('left-product-image');
+products.centerImage = document.getElementById('center-product-image');
+products.rightImage = document.getElementById('right-product-image');
+
+
+products.leftTitle = document.getElementById('left-product-title');
+products.centerTitle = document.getElementById('center-product-title');
+products.rightTitle = document.getElementById('right-product-title');
+
+products.leftObject = null;
+products.centerObject = null;
+products.rightObject = null;
 
 
 
 
 
-
-Products.container = document.getElementById('formProduct');
-
-Products.leftImage = document.getElementById('left-product-image');
-Products.centerImage = document.getElementById('center-product-image');
-Products.rightImage = document.getElementById('right-product-image');
-
-
-Products.leftTitle = document.getElementById('left-product-title');
-Products.centerTitle = document.getElementById('center-product-title');
-Products.rightTitle = document.getElementById('right-product-title');
-
-Products.leftObject = null;
-Products.centerObject = null;
-Products.rightObject = null;
-
-
-
-
-
-
-new Products('bag product', 'img/bag.jpg');
-new Products('banana product', 'img/banana.jpg');
-new Products('boots product', 'img/boots.jpg');
-new Products('bubblegum product', 'img/bubblegum.jpg');
-new Products('chair product', 'img/chair.jpg');
-
-
-new Products('cthulhu product', 'img/cthulhu.jpg');
-new Products('dog-duck product', 'img/dog-duck.jpg');
-new Products('dragon product', 'img/dragon.jpg');
-new Products('pen product', 'img/pen.jpg');
-
-
-new Products('pet-sweep product', 'img/pet-sweep.jpg');
-new Products('breakfast product', 'img/breakfast.jpg');
-new Products('sweep product', 'img/sweep.png');
-new Products('bathroom product', 'img/bathroom.jpg');
-new Products('scissors product', 'img/scissors.jpg');
-new Products('shark product', 'img/shark.jpg');
-
-
-new Products('tauntaun product', 'img/tauntaun.jpg');
-new Products('unicorn product', 'img/unicorn.jpg');
-new Products('usb product', 'img/usb.gif');
-new Products('water-can product', 'img/water-can.jpg');
-new Products('wine-glass product', 'img/wine-glass.jpg');
+new products('pet-sweep', 'img/pet-sweep.jpg');
+new products('scissors', 'img/scissors.jpg');
+new products('shark', 'img/shark.jpg');
+new products('sweep', 'img/sweep.png');
+new products('tauntaun', 'img/tauntaun.jpg');
+new products('unicorn', 'img/unicorn.jpg');
+new products('usb', 'img/usb.gif');
+new products('water-can', 'img/water-can.jpg');
+new products('wine-glass', 'img/wine-glass.jpg');
+new products('bag', 'img/bag.jpg');
+new products('banana', 'img/banana.jpg');
+new products('bathroom', 'img/bathroom.jpg');
+new products('boots', 'img/boots.jpg');
+new products('breakfast', 'img/breakfast.jpg');
+new products('bubblegum', 'img/bubblegum.jpg');
+new products('chair', 'img/chair.jpg');
+new products('cthulhu', 'img/cthulhu.jpg');
+new products('dog-duck', 'img/dog-duck.jpg');
+new products('dragon', 'img/dragon.jpg');
+new products('pen', 'img/pen.jpg');
 
 
 
+function renderNewProducts() {
+
+  var forbidden = [products.leftObject, products.centerObject, products.rightObject];
+
+  do {
+
+    products.leftObject = getRandomProduct();
+
+  } while (forbidden.includes(products.leftObject))
+  forbidden.push(products.leftObject);
+  do {
+
+    products.centerObject = getRandomProduct();
+
+  } while (forbidden.includes(products.centerObject));
+  forbidden.push(products.centerObject);
+  do {
+
+    products.rightObject = getRandomProduct();
+  } while (forbidden.includes(products.rightObject));
+
+  products.leftObject.seenCounter++;                                      
+  products.centerObject.seenCounter++;
+  products.rightObject.seenCounter++;
 
 
-////////////////////////////////////////////////////////////////////////////////////////////
-
-function renderProducts() {
-
-    var forbidden = [Products.leftObject, Products.centerObject, Products.rightObject];
-
-    do {
-
-        Products.leftObject = getRandomProduct();
-
-    } while (forbidden.includes(Products.leftObject))
-    forbidden.push(Products.leftObject);
-    do {
-
-        Products.centerObject = getRandomProduct();
-
-    } while (forbidden.includes(Products.centerObject));
-    forbidden.push(Products.centerObject);
-    do {
-
-        Products.rightObject = getRandomProduct();
-    } while (forbidden.includes(Products.rightObject));
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    Products.leftObject.shownCtr++;
-    Products.centerObject.shownCtr++;
-    Products.rightObject.shownCtr++;
+  var leftProductImageElement = products.leftImage;
+  var centerProductImageElement = products.centerImage;
+  var rightProductImageElement = products.rightImage;
 
 
-    var leftProductImageElement = Products.leftImage;
-    var centerProductImageElement = Products.centerImage;
-    var rightProductImageElement = Products.rightImage;
+  leftProductImageElement.setAttribute('src', products.leftObject.src);           
+  leftProductImageElement.setAttribute('alt', products.leftObject.name);
+
+  centerProductImageElement.setAttribute('src', products.centerObject.src);       
+  centerProductImageElement.setAttribute('alt', products.centerObject.name);
+
+  rightProductImageElement.setAttribute('src', products.rightObject.src);         
+  rightProductImageElement.setAttribute('alt', products.rightObject.name);
 
 
-    leftProductImageElement.setAttribute('src', Products.leftObject.src);
-    leftProductImageElement.setAttribute('alt', Products.leftObject.name);
+  products.leftTitle.textContent = products.leftObject.name;
+  products.centerTitle.textContent = products.centerObject.name
+  products.rightTitle.textContent = products.rightObject.name;
 
-    centerProductImageElement.setAttribute('src', Products.centerObject.src);
-    centerProductImageElement.setAttribute('alt', Products.centerObject.name);
-
-    rightProductImageElement.setAttribute('src', Products.rightObject.src); t
-    rightProductImageElement.setAttribute('alt', Products.rightObject.name);
+}   
 
 
-    Products.leftTitle.textContent = Products.leftObject.name;
-    Products.centerTitle.textContent = Products.centerObject.name
-    Products.rightTitle.textContent = Products.rightObject.name;
 
-}
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 function getRandomProduct() {
-    var index = Math.floor(Math.random() * Products.all.length);
-    console.log('index', index);
-    return Products.all[index];
-}
+  var index = Math.floor(Math.random() * products.all.length);
+  console.log('index', index);
+  return products.all[index];
+} 
 
 
 
 function updateTotals() {
 
-    var alloutput = document.getElementById('productItem');
+  var alloutput = document.getElementById('productsTable');
 
-    alloutput.innerHTML = '';
+  alloutput.innerHTML = '';
 
-    for (var i = 0; i < Products.all.length; i++) {
-        var newProduct = Products.all[i];
-        var output = addProduct('output', alloutput);
-        addProduct('li', output, newProduct.name + ' have ' + newProduct.clickCtr + ' votes ,number of shown ' + newProduct.shownCtr + '.');
-    }
-}
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-function addProduct(tag, container, text) {
-
-    var element = document.createElement(tag);
-    container.appendChild(element);
-    if (text) {
-        element.textContent = text;
-    }
-    return element;
-
-}
-
-
-
-function clickProduct(event) {
-
-    var productId = event.target.id;
-    var formProduct;
-
-    if (productId === 'left-product-image') {
-        formProduct = Products.leftObject;
-    } else if (productId === 'center-product-image') {
-        formProduct = Products.centerObject;
-    } else if (productId === 'right-product-image') {
-        formProduct = Products.rightObject;
-
-    } else {
-        console.log(' Finish ', productId);
-    }
-
-    if (formProduct) {
-        formProduct.clickCtr++;
-        Products.firstCtr++;
-
-        updateTotals();
-
-        if (Products.firstCtr === Products.maxLimit) {
-
-            alert('sorry you finish click trail');
-
-            Products.container.removeEventListener('click', clickProduct);
-
-        } else {
-
-            renderProducts();
-        } 
-    }
+  for (var i = 0; i < products.all.length; i++) {
+    var newProduct = products.all[i];
+    var output = addElement('output', alloutput);
+    addElement('li', output, newProduct.name + '= ' + newProduct.clickCtr + ' votes and number of shown = ' + newProduct.seenCounter + ' .');
+  }
 } 
 
-Products.container.addEventListener('click', clickProduct);
+
+
+function addElement(tag, container, text) {
+
+  var element = document.createElement(tag);
+  container.appendChild(element);
+  if (text) {
+    element.textContent = text;
+  }
+  return element;
+
+}  
+
+
+
+function clickHandler(event) {
+
+  var clickItemId = event.target.id;
+  var productChlicked;
+
+  if (clickItemId === 'left-product-image') {
+    productChlicked = products.leftObject;
+  } else if (clickItemId === 'center-product-image') {
+    productChlicked = products.centerObject;
+  } else if (clickItemId === 'right-product-image') {
+    productChlicked = products.rightObject;
+
+  } else {
+    console.log('Finished ', clickItemId);
+  }
+
+  if (productChlicked) {
+    productChlicked.clickCtr++;
+    products.initialCounter++;
+
+    updateTotals();
+
+    if (products.initialCounter === products.maxLimit) {
+
+      alert('sorry finish your trails  ');
+      fullChart();
+
+      products.container.removeEventListener('click', clickHandler);
+
+    } else {
+
+      renderNewProducts();
+    } 
+  }  
+}  
+
+products.container.addEventListener('click', clickHandler);
 
 updateTotals();
 
-renderProducts();
+renderNewProducts();
 
+
+
+
+
+
+var ctx = document.getElementById('chart').getContext('2d');
+
+
+var productsNames = [];
+var productsSeen = [];
+var productsClicks = [];
+
+
+function makeProductname() {
+
+  for (var i = 0; i < products.all.length; i++) {        
+    var productName = products.all[i].name;
+    productsNames.push(productName);
+    console.log('productsnames', productsNames);
+  }
+
+  return productsNames;
+
+}
+
+function makeProductseen() {
+
+  for (var i = 0; i < products.all.length; i++) {
+    var productSeen = products.all[i];
+    productsSeen.push(productSeen.seenCounter);
+    console.log('productsSeen', productsSeen);
+  }
+
+  return productsSeen;
+} 
+
+
+
+
+
+function makeProductclick() {
+
+  for (var i = 0; i < products.all.length; i++) {
+    var productClick = products.all[i];
+    productsClicks.push(productClick.clickCtr);
+    console.log('productsClicks', productsClicks);
+  }
+
+  return productsClicks;
+
+}
+
+
+
+
+function fullChart()
+{
+
+  console.log('Chart : ', Chart);
+  var chart = new Chart(ctx, {
+    type: 'bar',
+  
+    
+    data: {
+      labels: makeProductname(),
+      datasets: [
+        {
+          label: 'lab11 ',
+          backgroundColor: 'rgb(205, 9, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: makeProductclick()
+        }, 
+{         label: 'lab12 ',
+          backgroundColor: 'rgb(125, 3, 179)',
+          borderColor: ' rgb(125, 63, 170)',
+          data: makeProductseen(), 
+          type: 'line'
+        }            ]
+        
+        
+    },
+    options: {}
+  });
+
+}
